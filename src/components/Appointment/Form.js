@@ -17,10 +17,10 @@ let cancel = function() {
 }
 
 let save = function() {
+  console.log("IN FORM", name, interviewer)
   props.onSave(name, interviewer)
-  
 }
-  console.log("In Form", props.interviewer)
+
   return (
     <main className="appointment__card appointment__card--create">
       <section className="appointment__card-left">

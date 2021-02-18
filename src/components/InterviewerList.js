@@ -7,7 +7,7 @@ export default function InterviewerList(props){
   // interviewers array - an array of objects containing the information of each interviewer
   // interviewer: number - the id of an interviewer
   // setInterviewer: function - a function that accepts an interviewer id
-
+  console.log("In InterviewList", props.interviewers)
   const interviewerList = props.interviewers.map(interviewer => (
     <InterviewerListItem
       name={interviewer.name}

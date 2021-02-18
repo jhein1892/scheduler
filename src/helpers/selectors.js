@@ -28,17 +28,15 @@ export function getInterview(state, interview) {
 }
 
     export function getInterviewersForDay(state, day) {
-      let output = []
+      // let output = []
       let days = state.days
-      
       const myDay = days.filter(d => d.name === day)
       
-      if (myDay.length > 0){
-        const theDay = myDay[0].appointments
-        const myApp = theDay.map(d => state.appointments[d])
-        const theInt = myApp.filter(app => app.interview !== null)
-        const myInt = theInt.map(int => output.push(state.interviewers[int.interview.interviewer]))
-        return output  
+      if (myDay.length > 0){        
+        let output = myDay[0].interviewers 
+        const myInt = state.interviewers
+        const myInts = output.map(out => myInt[out])
+        return myInts
       } else {
         return []
       }

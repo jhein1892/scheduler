@@ -8,34 +8,80 @@ import { getAppointmentsForDay, getInterview, getInterviewersForDay } from "../h
 
 
 export default function Application(props) {
+  //State
   const [state, setState] = useState({
     day: "Monday",
     days:[],
     appointments: {},
     interviewers: {}
   })
+
+  // Booking Appointments 
+  function bookInterview(id, interview) {
+    
+    const appointment = {
+      ...state.appointments[id],
+      interview: { ...interview }
+    };
+    const appointments = {
+      ...state.appointments,
+      [id]: appointment
+    };
+
+    let URL = `/api/appointments/${id}`
+    return axios.put(URL, {interview})
+    .then(() => setState ({
+      ...state, appointments
+    }))
+    .catch((error) => console.log("error", error))
+  } 
+
+  function cancelInterview(id){
+    let URL = `/api/appointments/${id}`
+    let interview = null
+    
+    const appointment ={
+      ...state.appointments[id],
+      interview: null 
+    }
+    const appointments ={
+      ...state.appointments,
+      [id]: appointment 
+    }
+    return axios.delete(URL)
+    .then(() => 
+     setState ({
+        ...state, appointments
+      })
+    )
+    .catch((error) => console.log("error", error))
+  }
+  
+  // Getting appointments, interviewers, and specific interview
   const dailyAppointments = getAppointmentsForDay(state, state.day); 
   const interviewers = getInterviewersForDay(state, state.day)
-   
+
   const appointmentList = dailyAppointments.map(app =>{
     const interview = getInterview(state, app.interview);
-    console.log("In Map", app)
-    console.log("in Map (getint)", getInterviewersForDay(state, state.day))
-    return (
+
+    return ( 
     <Appointment
       key={app.id}
       id={app.id}
       time={app.time}
       interview={interview}
       interviewers={interviewers}
-      // Showing up 2 time for some reason. But only for Monday
+      bookInterview= {bookInterview}
+      cancelInterview={cancelInterview}
     />
     )
     })
 
-    const setDay = day => setState({ ...state, day });
-    // const setDays = days => setState(prev =>({ ...prev, days }));
      
+
+    const setDay = day => setState({ ...state, day });
+
+    // pulling info form our APIs
     useEffect(() => {
       const dayURL = '/api/days' 
       const appURL = '/api/appointments'
@@ -47,10 +93,10 @@ export default function Application(props) {
       ]).then((all) => {
         const [first, second, third] = all; 
         setState(prev => ({...prev, days: first.data, appointments: second.data, interviewers: third.data}))
-       console.log(all)
       })  
     }, [])
 
+    // What we are returning from the component 
     return (
       <main className="layout">
       <section className="sidebar">
