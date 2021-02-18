@@ -4,48 +4,7 @@ import DayList from "components/DayList"
 import "components/Application.scss";
 import "components/Appointment"; 
 import Appointment from "components/Appointment";
-import { getAppointmentsForDay, getInterview } from "../helpers/selectors";
-// const appointments = [
-//   {
-//     id: 1,
-//     time: "12pm",
-//   },
-//   {
-//     id: 2,
-//     time: "1pm",
-//     interview: {
-//       student: "Lydia Miller-Jones",
-//       interviewer: {
-//         id: 1,
-//         name: "Sylvia Palmer",
-//         avatar: "https://i.imgur.com/LpaY82x.png",
-//       }
-//     }
-//   },
-//   {
-//     id: 3,
-//     time: "2pm"
-//   },
-//   {
-//     id: 4,
-//     time: "3pm",
-//     interview: {
-//       student: "John Smith",
-//       interviewer: {
-//         id: 2,
-//         name: "Tori Malcolm",
-//         avatar: "https://i.imgur.com/Nmx0Qxo.png",
-//       }
-//     }
-//   },
-//   {
-//     id: 5,
-//     time: "4pm",
-//   }
-// ];
-
-
-
+import { getAppointmentsForDay, getInterview, getInterviewersForDay } from "../helpers/selectors";
 
 
 export default function Application(props) {
@@ -55,22 +14,25 @@ export default function Application(props) {
     appointments: {},
     interviewers: {}
   })
-
   const dailyAppointments = getAppointmentsForDay(state, state.day); 
+  const interviewers = getInterviewersForDay(state, state.day)
    
   const appointmentList = dailyAppointments.map(app =>{
     const interview = getInterview(state, app.interview);
-    
-    
+    console.log("In Map", app)
+    console.log("in Map (getint)", getInterviewersForDay(state, state.day))
     return (
     <Appointment
       key={app.id}
       id={app.id}
       time={app.time}
       interview={interview}
+      interviewers={interviewers}
+      // Showing up 2 time for some reason. But only for Monday
     />
     )
     })
+
     const setDay = day => setState({ ...state, day });
     // const setDays = days => setState(prev =>({ ...prev, days }));
      
@@ -113,7 +75,7 @@ export default function Application(props) {
       </section>
       <section className="schedule">
         {appointmentList}
-        <Appointment key="last" time="5pm"/>
+        <Appointment key="last" time="5pm" />
       </section>
     </main>
   );
