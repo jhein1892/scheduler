@@ -44,7 +44,7 @@ export default function Appointment(props) {
     transition(DELETE, true)
       props.cancelInterview(props.id)
       .then(() => transition(EMPTY))
-      .catch(() => transition(ERROR_DELETE, true))
+      .catch((error) => transition(ERROR_DELETE, true))
     
     console.log("In DELETE", props)
   
@@ -61,12 +61,11 @@ export default function Appointment(props) {
           interviewer={props.interview.interviewer}
           onDelete={() => transition(CONFIRM)}
           onEdit={() => transition(EDIT)}
-
           />
       )}
       {mode === CREATE && (
         <Form
-          key={props.key}
+          // key={props.key}
           interviewers= {props.interviewers}
           onSave={save}
           onCancel={() => back(EMPTY)}
@@ -111,10 +110,9 @@ export default function Appointment(props) {
         <Error
           onClose={() => {
             back()
-            transition(SHOW) // SHOULDN"T NEED THIS!
           }}
         />
       )}
     </article>
   )
-}
+} 

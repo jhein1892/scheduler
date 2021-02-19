@@ -22,7 +22,6 @@ console.log("Props", state)
 if (!state){
   return null
 }
-  
   // Getting appointments, interviewers, and specific interview
   const interviewers = getInterviewersForDay(state, state.day)
   const dailyAppointments = getAppointmentsForDay(state, state.day); 
