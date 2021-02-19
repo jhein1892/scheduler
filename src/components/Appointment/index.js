@@ -6,6 +6,7 @@ import Empty from "./Empty";
 import Form from "./Form";
 import Status from "./Status";
 import Confirm from "./Confirm"; 
+import Error from "./Error"; 
 import { useVisualMode }  from "hooks/useVisualMode.js"
 import action from '@storybook/addon-actions/dist/preview/action';
 
@@ -16,6 +17,9 @@ const CREATE = "CREATE";
 const SAVING = "SAVING";
 const DELETE = "DELETE"; 
 const CONFIRM = "CONFIRM"; 
+const EDIT = "EDIT"; 
+const ERROR_SAVE = "ERROR_SAVE";
+const ERROR_DELETE = "ERROR_DELETE";
 
 export default function Appointment(props) {
   
@@ -26,28 +30,24 @@ export default function Appointment(props) {
   function save(name, interviewer) {
     transition(SAVING)
     console.log(" IN SAVE" ,props)
-    // console.log(props.interview)
-    // let bookInterview = props.bookInterview
     
     const interview = {
-      student: props.name,
+      student: name,
       interviewer
     };
     props.bookInterview(props.id, interview)
     .then(() => transition(SHOW))
-    
-    // return bookInterview(interview.name, interview.interviewer)
+    .catch(() => transition(ERROR_SAVE, true)) 
   };
 
   function Delete() {
-    transition(DELETE)
+    transition(DELETE, true)
       props.cancelInterview(props.id)
       .then(() => transition(EMPTY))
-      
+      .catch(() => transition(ERROR_DELETE, true))
     
     console.log("In DELETE", props)
-    
-    
+  
   }
 
   // What this component is returning
@@ -60,6 +60,8 @@ export default function Appointment(props) {
           name={props.interview.student}
           interviewer={props.interview.interviewer}
           onDelete={() => transition(CONFIRM)}
+          onEdit={() => transition(EDIT)}
+
           />
       )}
       {mode === CREATE && (
@@ -83,8 +85,34 @@ export default function Appointment(props) {
       {mode === CONFIRM && (
         <Confirm
           message="Are you sure you want to delete?"
-          onCancel={() => back(SHOW)}
-          onConfirm={() => Delete()}
+          onCancel={() => back()}
+          onConfirm={Delete}
+        />
+      )}
+      {mode === EDIT && (
+        <Form
+        key={props.key}
+        interviewers= {props.interviewers}
+        name={props.interview.student}
+        interviewer={props.interview.interviewer.id}
+        onSave={save}
+        onCancel={() => back()}
+        />
+      )}
+      {mode === ERROR_SAVE && (
+        <Error
+          onClose={() => {
+            back()
+            
+          } }
+        />
+      )}
+      {mode === ERROR_DELETE && (
+        <Error
+          onClose={() => {
+            back()
+            transition(SHOW) // SHOULDN"T NEED THIS!
+          }}
         />
       )}
     </article>
