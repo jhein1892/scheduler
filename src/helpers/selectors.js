@@ -1,6 +1,9 @@
 export function getAppointmentsForDay(state, day) {
   let output = []
   let days = state.days
+  if (!state.days){
+    return []
+  }
   const myDay = days.filter(d => d.name === day)
   if (myDay.length > 0){
     const appointments = myDay[0].appointments
@@ -29,6 +32,9 @@ export function getInterview(state, interview) {
 
     export function getInterviewersForDay(state, day) {
       // let output = []
+      if (!state.days){
+        return [];
+      }
       let days = state.days
       const myDay = days.filter(d => d.name === day)
       

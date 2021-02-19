@@ -5,61 +5,27 @@ import "components/Application.scss";
 import "components/Appointment"; 
 import Appointment from "components/Appointment";
 import { getAppointmentsForDay, getInterview, getInterviewersForDay } from "../helpers/selectors";
-
+import { useApplicationData } from "../hooks/useApplicationData"
 
 export default function Application(props) {
-  //State
-  const [state, setState] = useState({
-    day: "Monday",
-    days:[],
-    appointments: {},
-    interviewers: {}
-  })
+  //State custom Hook
+  const {
+    state,
+    setDay,
+    bookInterview,
+    cancelInterview
+  } = useApplicationData();
 
   // Booking Appointments 
-  function bookInterview(id, interview) {
-    
-    const appointment = {
-      ...state.appointments[id],
-      interview: { ...interview }
-    };
-    const appointments = {
-      ...state.appointments,
-      [id]: appointment
-    };
 
-    let URL = `/api/appointments/${id}`
-    return axios.put(URL, {interview})
-    .then(() => setState ({
-      ...state, appointments
-    }))
-    // .catch((error) => console.log("error", error))
-  } 
-
-  function cancelInterview(id){
-    let URL = `/api/appointments/${id}`
-    let interview = null
-    
-    const appointment ={
-      ...state.appointments[id],
-      interview: null 
-    }
-    const appointments ={
-      ...state.appointments,
-      [id]: appointment 
-    }
-    return axios.delete(URL)
-    .then(() => 
-     setState ({
-        ...state, appointments
-      })
-    )
-    // .catch((error) => console.log("error", error))
-  }
+console.log("Props", state)
+if (!state){
+  return null
+}
   
   // Getting appointments, interviewers, and specific interview
-  const dailyAppointments = getAppointmentsForDay(state, state.day); 
   const interviewers = getInterviewersForDay(state, state.day)
+  const dailyAppointments = getAppointmentsForDay(state, state.day); 
 
   const appointmentList = dailyAppointments.map(app =>{
     const interview = getInterview(state, app.interview);
@@ -79,22 +45,9 @@ export default function Application(props) {
 
      
 
-    const setDay = day => setState({ ...state, day });
+    
 
     // pulling info form our APIs
-    useEffect(() => {
-      const dayURL = '/api/days' 
-      const appURL = '/api/appointments'
-      const intURL = '/api/interviewers'
-      Promise.all([
-        axios.get(dayURL),
-        axios.get(appURL),
-        axios.get(intURL)
-      ]).then((all) => {
-        const [first, second, third] = all; 
-        setState(prev => ({...prev, days: first.data, appointments: second.data, interviewers: third.data}))
-      })  
-    }, [])
 
     // What we are returning from the component 
     return (
