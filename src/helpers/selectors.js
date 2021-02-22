@@ -24,10 +24,7 @@ export function getInterview(state, interview) {
     "student": interview.student,
     "interviewer": input[interviewer]
   }
-  // console.log(interviewer)
-  // console.log(input)
   return output
-  
 }
 
     export function getInterviewersForDay(state, day) {
@@ -37,7 +34,6 @@ export function getInterview(state, interview) {
       }
       let days = state.days
       const myDay = days.filter(d => d.name === day)
-      
       if (myDay.length > 0){        
         let output = myDay[0].interviewers 
         const myInt = state.interviewers
@@ -46,17 +42,4 @@ export function getInterview(state, interview) {
       } else {
         return []
       }
-    
-      // console.log("myDay", myDay[0].appointments)
-      // if (myApp.interview !== null){
-      //   const myInt = myApp.interview
-      //   console.log(myInt)
-      // }
-      // if (myDay.length > 0){
-      //   const appointments = myDay[0].appointments
-      //   appointments.map(app => output.push(state.appointments[app]))
-      //   return output
-      // } else {
-      //   return []
-      // }
     }

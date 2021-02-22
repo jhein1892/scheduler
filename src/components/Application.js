@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios"
+import React from "react";
+// import axios from "axios"
 import DayList from "components/DayList"
 import "components/Application.scss";
 import "components/Appointment"; 
@@ -18,10 +18,6 @@ export default function Application(props) {
 
   // Booking Appointments 
 
-console.log("Props", state)
-if (!state){
-  return null
-}
   // Getting appointments, interviewers, and specific interview
   const interviewers = getInterviewersForDay(state, state.day)
   const dailyAppointments = getAppointmentsForDay(state, state.day); 

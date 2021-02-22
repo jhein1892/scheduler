@@ -10,9 +10,9 @@ export default function DayListItem(props) {
 
 function formatSpots(){
   if (props.spots > 1){
-    return `${props.spots} spots remaning`
+    return `${props.spots} spots remaining`
   } else if (props.spots === 1){
-    return `${props.spots} spot remaning`
+    return `${props.spots} spot remaining`
   } else {
     return `no spots remaining`
   }

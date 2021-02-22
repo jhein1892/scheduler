@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import "./styles.scss";
 import Header from "./Header";
 import Show from "./Show";
@@ -8,7 +8,7 @@ import Status from "./Status";
 import Confirm from "./Confirm"; 
 import Error from "./Error"; 
 import { useVisualMode }  from "hooks/useVisualMode.js"
-import action from '@storybook/addon-actions/dist/preview/action';
+// import action from '@storybook/addon-actions/dist/preview/action';
 
 
 const EMPTY = "EMPTY";
@@ -49,13 +49,22 @@ export default function Appointment(props) {
     console.log("In DELETE", props)
   
   }
+  useEffect(() => {
+    console.log("here", props)
+    if (props.interview && mode === EMPTY){
+      transition(SHOW)
+    } 
+    if (props.interview === null && mode === SHOW){
+      transition(EMPTY)
+    }
+  }, [props.interview, transition, mode]); 
 
   // What this component is returning
   return(
     <article className="appointment">
       <Header time={props.time}/>
       {mode === EMPTY && <Empty onAdd={() => transition(CREATE)}/>}
-      {mode === SHOW && (
+      {mode === SHOW && props.interview && (
         <Show
           name={props.interview.student}
           interviewer={props.interview.interviewer}
