@@ -29,7 +29,7 @@ export default function Appointment(props) {
 
   function save(name, interviewer) {
     transition(SAVING)
-    console.log(" IN SAVE" ,props)
+    // console.log(" IN SAVE" ,props)
     
     const interview = {
       student: name,
@@ -50,7 +50,6 @@ export default function Appointment(props) {
   
   }
   useEffect(() => {
-    console.log("here", props)
     if (props.interview && mode === EMPTY){
       transition(SHOW)
     } 
@@ -61,7 +60,7 @@ export default function Appointment(props) {
 
   // What this component is returning
   return(
-    <article className="appointment">
+    <article className="appointment" data-testid="appointment">
       <Header time={props.time}/>
       {mode === EMPTY && <Empty onAdd={() => transition(CREATE)}/>}
       {mode === SHOW && props.interview && (

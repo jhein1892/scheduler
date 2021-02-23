@@ -4,8 +4,6 @@ import InterviewerListItem from "components/InterviewerListItem"
 import propTypes from "prop-types"
 
 function InterviewerList(props){ 
-
-  console.log("In InterviewList", props.interviewers)
   const interviewerList = props.interviewers.map(interviewer => (
     <InterviewerListItem
       key={interviewer.id}

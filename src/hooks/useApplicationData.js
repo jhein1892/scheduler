@@ -98,19 +98,20 @@ function cancelInterview(id){
 }
 
 useEffect(() => {
-  // const newSocket = new WebSocket(process.env.REACT_APP_WEBSOCKET_URL)
-  // newSocket.onopen = () => {
-  //   newSocket.send("Ping")
-  // }
-  // newSocket.onmessage = function(event) {
-  //   console.log("event", event)
-  //   const {type, id, interview} = JSON.parse(event.data);
-  //   if (type === SET_INTERVIEW){
-  //     console.log('THis is an interview!')
-  //     dispatch({type:type, id:id, interview:interview})
+  // Need to comment out lines 102-114 when testing
+  const newSocket = new WebSocket(process.env.REACT_APP_WEBSOCKET_URL)
+  newSocket.onopen = () => {
+    newSocket.send("Ping")
+  }
+  newSocket.onmessage = function(event) {
+    console.log("event", event)
+    const {type, id, interview} = JSON.parse(event.data);
+    if (type === SET_INTERVIEW){
+      console.log('THis is an interview!')
+      dispatch({type:type, id:id, interview:interview})
        
-  //   }
-  // }
+    }
+  }
   const dayURL = '/api/days'
   const appURL = '/api/appointments'
   const intURL = '/api/interviewers'

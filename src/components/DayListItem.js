@@ -19,7 +19,7 @@ function formatSpots(){
 }
  
   return (
-    <li className={dayClass} onClick={props.setDay}>
+    <li className={dayClass} onClick={props.setDay} data-testid="day">
       <h2 className="text--regular">{props.name}</h2> 
       <h3 className="text--light">
         {formatSpots()}</h3>
