@@ -38,6 +38,7 @@ function bookInterview(id, interview) {
     if (day.name === state.day && state.appointments[id].interview === null){
       day.spots -= 1; 
     }
+    return null; 
     })
   let URL = `/api/appointments/${id}`
   return axios.put(URL, {interview})
@@ -63,6 +64,7 @@ function cancelInterview(id){
     if (day.name === state.day){
       day.spots += 1; 
     } 
+    return null 
     })
   return axios.delete(URL)
   .then(() => 
@@ -82,7 +84,6 @@ useEffect(() => {
   //   if (type === SET_INTERVIEW){
   //     console.log('THis is an interview!')
   //     dispatch({type:type, id:id, interview:interview})
-       
   //   }
   // }
   const dayURL = '/api/days'
