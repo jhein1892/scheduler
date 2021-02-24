@@ -1,10 +1,11 @@
 import React from "react";
-import { render } from "@testing-library/react";
+import { getByText, prettyDOM, render, waitForElement } from "@testing-library/react";
 import Appointment from "components/Application";
 
 
 describe("Appointment", () => {
-  it("renders without crashing", () => {
-    render(<Appointment />);
+  it("renders without crashing", async () => {
+   const { container } = render(<Appointment />);
+    await waitForElement(() => getByText(container, "5pm"));
   });
 }); 
