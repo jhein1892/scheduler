@@ -9,9 +9,6 @@ import reducer, {
 
 
 export function useApplicationData(){
-// const SET_DAY = "SET_DAY"
-// const SET_APPLICATION_DATA = "SET_APPLICATION_DATA"
-// const SET_INTERVIEW = "SET_INTERVIEW"
   const initialState = {
     day: "Monday",
     days:[],
@@ -33,12 +30,11 @@ function bookInterview(id, interview) {
     ...state.appointments,
     [id]: appointment
   };
-  const spots = state.days.filter(day => {
+  const spots = state.days.forEach(day => {
     
     if (day.name === state.day && state.appointments[id].interview === null){
       day.spots -= 1; 
     }
-    return null; 
     })
   let URL = `/api/appointments/${id}`
   return axios.put(URL, {interview})
@@ -60,11 +56,10 @@ function cancelInterview(id){
     ...state.appointments,
     [id]: appointment 
   }
-  const spots = state.days.filter(day => {
+  const spots = state.days.forEach(day => {
     if (day.name === state.day){
       day.spots += 1; 
     } 
-    return null 
     })
   return axios.delete(URL)
   .then(() => 
@@ -73,19 +68,16 @@ function cancelInterview(id){
 }
 
 useEffect(() => {
-  // Need to comment out lines 102-114 when testing
-  // const newSocket = new WebSocket(process.env.REACT_APP_WEBSOCKET_URL)
-  // newSocket.onopen = () => {
-  //   newSocket.send("Ping")
-  // }
-  // newSocket.onmessage = function(event) {
-  //   console.log("event", event)
-  //   const {type, id, interview} = JSON.parse(event.data);
-  //   if (type === SET_INTERVIEW){
-  //     console.log('THis is an interview!')
-  //     dispatch({type:type, id:id, interview:interview})
-  //   }
-  // }
+  const newSocket = new WebSocket(process.env.REACT_APP_WEBSOCKET_URL)
+
+  newSocket.onmessage = function(event) {
+    console.log("event", event)
+    const {type, id, interview} = JSON.parse(event.data);
+    if (type === SET_INTERVIEW){
+      console.log('THis is an interview!')
+      dispatch({type:type, id:id, interview:interview})
+    }
+  }
   const dayURL = '/api/days'
   const appURL = '/api/appointments'
   const intURL = '/api/interviewers'
@@ -96,14 +88,6 @@ useEffect(() => {
   ]).then((all) => {
     dispatch({type: SET_APPLICATION_DATA, days: all[0].data, appointments: all[1].data, interviewers: all[2].data})
   })  
-
-  // newSocket.onmessage = function(event) {
-  //   const {type, id, interview} = JSON.parse(event.data);
-  //   // if (type === SET_INTERVIEW) {
-  //   //   newSocket.send()
-  //   // }
-  // }
-  
 }, [])  
 return { state, setDay, bookInterview, cancelInterview };
 }
