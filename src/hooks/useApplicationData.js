@@ -1,10 +1,17 @@
 import { useEffect, useReducer } from "react";
 import axios from "axios"
+import reducer, {
+  SET_DAY,
+  SET_APPLICATION_DATA,
+  SET_INTERVIEW
+} from "reducers/application";
+
+
 
 export function useApplicationData(){
-const SET_DAY = "SET_DAY"
-const SET_APPLICATION_DATA = "SET_APPLICATION_DATA"
-const SET_INTERVIEW = "SET_INTERVIEW"
+// const SET_DAY = "SET_DAY"
+// const SET_APPLICATION_DATA = "SET_APPLICATION_DATA"
+// const SET_INTERVIEW = "SET_INTERVIEW"
   const initialState = {
     day: "Monday",
     days:[],
@@ -15,40 +22,40 @@ const [state, dispatch] = useReducer(reducer, initialState)
 
 const setDay = day => dispatch({type: SET_DAY, day});
 
-function reducer(state, action) {
-  const {day, days, appointments, interviewers, id, spots, interview} = action
-  switch(action.type) {
-    case SET_DAY:
-      { 
-      return {
-       ...state, day
-      }
-    }
-    case SET_APPLICATION_DATA:{
-      return {
-        ...state, days, appointments, interviewers
-      }
-      }
-    case SET_INTERVIEW:
-      {
-      const appointment = {
-        ...state.appointments[id],
-        interview: interview && { ...interview }
-      };
-      const appointments = {
-        ...state.appointments,
-        [id]: appointment
-      };
-      return {
-        ...state, appointments, spots
-      }
-    }
-    default: 
-      throw new Error(
-        `reduce didn't work with ${action.type}`
-      ) 
-  }
-}
+// function reducer(state, action) {
+//   const {day, days, appointments, interviewers, id, spots, interview} = action
+//   switch(action.type) {
+//     case SET_DAY:
+//       { 
+//       return {
+//        ...state, day
+//       }
+//     }
+//     case SET_APPLICATION_DATA:{
+//       return {
+//         ...state, days, appointments, interviewers
+//       }
+//       }
+//     case SET_INTERVIEW:
+//       {
+//       const appointment = {
+//         ...state.appointments[id],
+//         interview: interview && { ...interview }
+//       };
+//       const appointments = {
+//         ...state.appointments,
+//         [id]: appointment
+//       };
+//       return {
+//         ...state, appointments, spots
+//       }
+//     }
+//     default: 
+//       throw new Error(
+//         `reduce didn't work with ${action.type}`
+//       ) 
+//   }
+// }
 
 // Booking interview
 function bookInterview(id, interview) {
@@ -62,7 +69,10 @@ function bookInterview(id, interview) {
     [id]: appointment
   };
   const spots = state.days.filter(day => {
-    if (day.name === state.day){
+    
+    if (day.name === state.day && state.appointments[id].interview === null){
+      console.log("day", day.name)
+      console.log("State", state.appointments[id].interview)
       day.spots -= 1; 
     }
     })
@@ -99,19 +109,19 @@ function cancelInterview(id){
 
 useEffect(() => {
   // Need to comment out lines 102-114 when testing
-  const newSocket = new WebSocket(process.env.REACT_APP_WEBSOCKET_URL)
-  newSocket.onopen = () => {
-    newSocket.send("Ping")
-  }
-  newSocket.onmessage = function(event) {
-    console.log("event", event)
-    const {type, id, interview} = JSON.parse(event.data);
-    if (type === SET_INTERVIEW){
-      console.log('THis is an interview!')
-      dispatch({type:type, id:id, interview:interview})
+  // const newSocket = new WebSocket(process.env.REACT_APP_WEBSOCKET_URL)
+  // newSocket.onopen = () => {
+  //   newSocket.send("Ping")
+  // }
+  // newSocket.onmessage = function(event) {
+  //   console.log("event", event)
+  //   const {type, id, interview} = JSON.parse(event.data);
+  //   if (type === SET_INTERVIEW){
+  //     console.log('THis is an interview!')
+  //     dispatch({type:type, id:id, interview:interview})
        
-    }
-  }
+  //   }
+  // }
   const dayURL = '/api/days'
   const appURL = '/api/appointments'
   const intURL = '/api/interviewers'

@@ -32,6 +32,7 @@ export default function Appointment(props) {
     // console.log(" IN SAVE" ,props)
     
     const interview = {
+      id: props.id,
       student: name,
       interviewer
     };
@@ -48,7 +49,7 @@ export default function Appointment(props) {
     
     console.log("In DELETE", props)
   
-  }
+  } 
   useEffect(() => {
     if (props.interview && mode === EMPTY){
       transition(SHOW)
@@ -98,7 +99,7 @@ export default function Appointment(props) {
       )}
       {mode === EDIT && (
         <Form
-        key={props.key}
+        key={props.id}
         interviewers= {props.interviewers}
         name={props.interview.student}
         interviewer={props.interview.interviewer.id}
@@ -108,6 +109,7 @@ export default function Appointment(props) {
       )}
       {mode === ERROR_SAVE && (
         <Error
+          message="Could not Save"
           onClose={() => {
             back()
             
@@ -116,6 +118,7 @@ export default function Appointment(props) {
       )}
       {mode === ERROR_DELETE && (
         <Error
+        message="Could not Delete"
           onClose={() => {
             back()
           }}
