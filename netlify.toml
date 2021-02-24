@@ -9,7 +9,7 @@
   publish = "build/"
 
   # Default build command.
-  command = CI ='' "npm run build"
+  command = "npm run build"
 
 [build.environment]
   REACT_APP_API_BASE_URL = "https://scheduler1-lhl.herokuapp.com/"

@@ -36,7 +36,7 @@ function bookInterview(id, interview) {
   const spots = state.days.filter(day => {
     
     if (day.name === state.day && state.appointments[id].interview === null){
-     return day.spots -= 1; 
+      day.spots -= 1; 
     }
     })
   let URL = `/api/appointments/${id}`
@@ -61,7 +61,7 @@ function cancelInterview(id){
   }
   const spots = state.days.filter(day => {
     if (day.name === state.day){
-      return day.spots += 1; 
+      day.spots += 1; 
     } 
     })
   return axios.delete(URL)
