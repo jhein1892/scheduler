@@ -6,8 +6,6 @@ import reducer, {
   SET_INTERVIEW
 } from "reducers/application";
 
-
-
 export function useApplicationData(){
   const initialState = {
     day: "Monday",
@@ -30,12 +28,11 @@ function bookInterview(id, interview) {
     ...state.appointments,
     [id]: appointment
   };
-  const spots = state.days.forEach(day => {
-    
+  const spots = state.days.forEach(day => {  
     if (day.name === state.day && state.appointments[id].interview === null){
       day.spots -= 1; 
     }
-    })
+    });
   let URL = `/api/appointments/${id}`
   return axios.put(URL, {interview})
   .then(() => dispatch({type: SET_INTERVIEW, id, interview, appointments, spots}))
@@ -60,7 +57,7 @@ function cancelInterview(id){
     if (day.name === state.day){
       day.spots += 1; 
     } 
-    })
+    });
   return axios.delete(URL)
   .then(() => 
   dispatch({type: SET_INTERVIEW, id, interview, appointments, spots: spots}))
@@ -71,13 +68,11 @@ useEffect(() => {
   const newSocket = new WebSocket(process.env.REACT_APP_WEBSOCKET_URL)
 
   newSocket.onmessage = function(event) {
-    console.log("event", event)
     const {type, id, interview} = JSON.parse(event.data);
     if (type === SET_INTERVIEW){
-      console.log('THis is an interview!')
-      dispatch({type:type, id:id, interview:interview})
+      dispatch({type:type, id:id, interview:interview});
     }
-  }
+  };
   const dayURL = '/api/days'
   const appURL = '/api/appointments'
   const intURL = '/api/interviewers'
@@ -86,7 +81,7 @@ useEffect(() => {
     axios.get(appURL),
     axios.get(intURL)
   ]).then((all) => {
-    dispatch({type: SET_APPLICATION_DATA, days: all[0].data, appointments: all[1].data, interviewers: all[2].data})
+    dispatch({type: SET_APPLICATION_DATA, days: all[0].data, appointments: all[1].data, interviewers: all[2].data});
   })  
 }, [])  
 return { state, setDay, bookInterview, cancelInterview };

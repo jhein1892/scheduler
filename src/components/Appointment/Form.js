@@ -9,12 +9,12 @@ const [error, setError] = useState("");
 const [interviewer, setInterviewer ] = useState(props.interviewer || null);
 
 let reset = function() {
-    setName("") 
-    setInterviewer(null) 
+    setName(""); 
+    setInterviewer(null); 
 }
 let cancel = function() {
-  props.onCancel()
-  reset()
+  props.onCancel();
+  reset();
 }
 
 let validate = function() {
@@ -24,7 +24,6 @@ let validate = function() {
   }
   setError("")
   props.onSave(name, interviewer); 
-  
 }
 
   return (
@@ -39,9 +38,6 @@ let validate = function() {
             placeholder="Enter Student Name"
             value={name}
             onChange={(event) => setName(event.target.value)}
-            /*
-              This must be a controlled component
-            */
           />
         </form>
         <section className="appointment__validation">{error}</section>

@@ -29,20 +29,20 @@ export default function Appointment(props) {
 
   function save(name, interviewer) {
     transition(SAVING)
-    // console.log(" IN SAVE" ,props)
     
     const interview = {
       id: props.id,
       student: name,
       interviewer
     };
+
     props.bookInterview(props.id, interview)
     .then(() => transition(SHOW))
     .catch(() => transition(ERROR_SAVE, true)) 
   };
 
   function Delete() {
-    transition(DELETE, true)
+    transition(DELETE, true);
       props.cancelInterview(props.id)
       .then(() => transition(EMPTY))
       .catch((error) => transition(ERROR_DELETE, true))
@@ -50,10 +50,10 @@ export default function Appointment(props) {
   } 
   useEffect(() => {
     if (props.interview && mode === EMPTY){
-      transition(SHOW)
+      transition(SHOW);
     } 
     if (props.interview === null && mode === SHOW){
-      transition(EMPTY)
+      transition(EMPTY);
     }
   }, [props.interview, transition, mode]); 
 

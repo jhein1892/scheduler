@@ -16,13 +16,12 @@ export default function Application(props) {
     cancelInterview
   } = useApplicationData();
 
-  // Booking Appointments 
 
   // Getting appointments, interviewers, and specific interview
   const interviewers = getInterviewersForDay(state, state.day)
   const dailyAppointments = getAppointmentsForDay(state, state.day); 
-
   const appointmentList = dailyAppointments.map(app =>{
+
     const interview = getInterview(state, app.interview);
 
     return ( 
@@ -37,12 +36,6 @@ export default function Application(props) {
     />
     )
     })
-
-     
-
-    
-
-    // pulling info form our APIs
 
     // What we are returning from the component 
     return (

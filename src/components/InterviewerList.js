@@ -12,7 +12,7 @@ function InterviewerList(props){
       selected={props.value === interviewer.id}
       setInterviewer={event => props.onChange(interviewer.id)}
       /> 
-  )) 
+  )); 
  
   return( 
     <section className="interviewers">

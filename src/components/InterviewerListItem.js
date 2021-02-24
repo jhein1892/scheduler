@@ -11,7 +11,7 @@ export default function interviewerListItem(props) {
   // setInterviewer:function - sets the interviewer upon selection
   let interviewerClass = classnames("interviewers__items", {
     "interviewers__item--selected": props.selected
-  })
+  });
 
    
   return (
