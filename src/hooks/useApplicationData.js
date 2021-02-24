@@ -71,7 +71,7 @@ function bookInterview(id, interview) {
   const spots = state.days.filter(day => {
     
     if (day.name === state.day && state.appointments[id].interview === null){
-      day.spots -= 1; 
+     return day.spots -= 1; 
     }
     })
   let URL = `/api/appointments/${id}`
@@ -96,7 +96,7 @@ function cancelInterview(id){
   }
   const spots = state.days.filter(day => {
     if (day.name === state.day){
-      day.spots += 1; 
+      return day.spots += 1; 
     } 
     })
   return axios.delete(URL)
@@ -107,19 +107,19 @@ function cancelInterview(id){
 
 useEffect(() => {
   // Need to comment out lines 102-114 when testing
-  const newSocket = new WebSocket(process.env.REACT_APP_WEBSOCKET_URL)
-  newSocket.onopen = () => {
-    newSocket.send("Ping")
-  }
-  newSocket.onmessage = function(event) {
-    console.log("event", event)
-    const {type, id, interview} = JSON.parse(event.data);
-    if (type === SET_INTERVIEW){
-      console.log('THis is an interview!')
-      dispatch({type:type, id:id, interview:interview})
+  // const newSocket = new WebSocket(process.env.REACT_APP_WEBSOCKET_URL)
+  // newSocket.onopen = () => {
+  //   newSocket.send("Ping")
+  // }
+  // newSocket.onmessage = function(event) {
+  //   console.log("event", event)
+  //   const {type, id, interview} = JSON.parse(event.data);
+  //   if (type === SET_INTERVIEW){
+  //     console.log('THis is an interview!')
+  //     dispatch({type:type, id:id, interview:interview})
        
-    }
-  }
+  //   }
+  // }
   const dayURL = '/api/days'
   const appURL = '/api/appointments'
   const intURL = '/api/interviewers'
@@ -128,7 +128,6 @@ useEffect(() => {
     axios.get(appURL),
     axios.get(intURL)
   ]).then((all) => {
-    // const [first, second, third] = all; 
     dispatch({type: SET_APPLICATION_DATA, days: all[0].data, appointments: all[1].data, interviewers: all[2].data})
   })  
 
