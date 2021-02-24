@@ -71,8 +71,6 @@ function bookInterview(id, interview) {
   const spots = state.days.filter(day => {
     
     if (day.name === state.day && state.appointments[id].interview === null){
-      console.log("day", day.name)
-      console.log("State", state.appointments[id].interview)
       day.spots -= 1; 
     }
     })
