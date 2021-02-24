@@ -22,41 +22,6 @@ const [state, dispatch] = useReducer(reducer, initialState)
 
 const setDay = day => dispatch({type: SET_DAY, day});
 
-// function reducer(state, action) {
-//   const {day, days, appointments, interviewers, id, spots, interview} = action
-//   switch(action.type) {
-//     case SET_DAY:
-//       { 
-//       return {
-//        ...state, day
-//       }
-//     }
-//     case SET_APPLICATION_DATA:{
-//       return {
-//         ...state, days, appointments, interviewers
-//       }
-//       }
-//     case SET_INTERVIEW:
-//       {
-//       const appointment = {
-//         ...state.appointments[id],
-//         interview: interview && { ...interview }
-//       };
-//       const appointments = {
-//         ...state.appointments,
-//         [id]: appointment
-//       };
-//       return {
-//         ...state, appointments, spots
-//       }
-//     }
-//     default: 
-//       throw new Error(
-//         `reduce didn't work with ${action.type}`
-//       ) 
-//   }
-// }
-
 // Booking interview
 function bookInterview(id, interview) {
     
