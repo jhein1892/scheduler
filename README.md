@@ -14,6 +14,18 @@ Interview Schedule is a Single Page Application used for booking student intervi
   * This works for Editing as well
 * Confirmation message appears when doing a destructive action to ensure nothing is done by mistake
 
+
+### Daily View 
+
+### Booking
+
+### Hover
+
+### Confirmation
+
+### Spots Filled 
+
+
 ## Setup
 
 Install dependencies with `npm install`.
