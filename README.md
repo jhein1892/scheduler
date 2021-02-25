@@ -58,3 +58,12 @@ npm test
 ```sh
 npm run storybook
 ```
+
+## Dependencies
+
+* Axios
+* Classnames
+* normalize.css
+* react
+* react-dom
+* react-scripts
