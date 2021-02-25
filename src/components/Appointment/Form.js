@@ -18,8 +18,14 @@ let cancel = function() {
 }
 
 let validate = function() {
+  console.log("name", name)
+  console.log("interviewer", interviewer)
   if (name === "") {
     setError("Student name cannot be blank");
+    return;
+  }
+  if (interviewer === null){
+    setError("Must pick an interviewer");
     return;
   }
   setError("")

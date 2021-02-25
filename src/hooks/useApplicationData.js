@@ -18,8 +18,7 @@ const [state, dispatch] = useReducer(reducer, initialState)
 const setDay = day => dispatch({type: SET_DAY, day});
 
 // Booking interview
-function bookInterview(id, interview) {
-    
+function bookInterview(id, interview) { 
   const appointment = {
     ...state.appointments[id],
     interview: interview && { ...interview }
