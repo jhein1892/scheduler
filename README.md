@@ -16,15 +16,26 @@ Interview Schedule is a Single Page Application used for booking student intervi
 
 
 ### Daily View 
+!["Daily View"](docs/DailyView.png)
+<i>Daily view on Home Page</i>
 
 ### Booking
+!["Booking view"](docs/Booking.png)
+<i>View when creating a booking</i>
 
 ### Hover
+!["Hover function"](docs/RedHover.png)
+
+<i>Red Background indicated Day being Hovered over</i>
 
 ### Confirmation
+!["Confirmation for Deleting"](docs/Confirmation.png)
+<i>Confirmation when executing a destructive action</i>
 
 ### Spots Filled 
+!["Spots Filled View"](docs/SpotsFilled.png)
 
+<i>When spots are filled, we see the day muted</i>
 
 ## Setup
 
